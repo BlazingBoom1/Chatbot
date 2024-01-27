@@ -1,0 +1,6 @@
+Python==3.9.7
+Flask==2.0.2
+Flask-SocketIO==5.1.2
+Chatterbot==1.0.5
+Chatterbot_corpus==1.2.0
+PyPDF2==1.26.0

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Web Interface</title>
+</head>
+<body>
+    <div id="chat-container">
+        <ul id="chat"></ul>
+        <input type="text" id="user-input" autocomplete="off" />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('response', function(msg) {
+            appendMessage('Chatbot', msg);
+        });
+
+        function sendMessage() {
+            var userInput = document.getElementById('user-input').value;
+            appendMessage('You', userInput);
+            socket.emit('message', userInput);
+            document.getElementById('user-input').value = '';
+        }
+
+        function appendMessage(sender, message) {
+            var chatList = document.getElementById('chat');
+            var listItem = document.createElement('li');
+            listItem.textContent = sender + ': ' + message;
+            chatList.appendChild(listItem);
+        }
+    </script>
+</body>
+</html>
